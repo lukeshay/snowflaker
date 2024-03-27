@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package snowflaker.v1;
+
+option go_package = "github.com/lukeshay/snowflaker/gen/proto/snowflaker/v1;snowflakerv1";
+
+service SnowflakerService {
+  rpc GetId(GetIdRequest) returns (GetIdResponse) {}
+}
+
+message GetIdRequest {}
+
+message GetIdResponse {
+  int64 id = 1;
+  int64 nodeId = 2;
+}

@@ -1,0 +1,28 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSL "https://github.com/bufbuild/buf/releases/download/v$VERSION/buf-$(uname -s)-$(uname -m)" -o "$BIN/buf"
+
+          chmod +x "$BIN/buf"
+        env:
+          BIN: /usr/local/bin
+          VERSION: 1.30.0
+      - run: echo ${{ secrets.BUF_API_TOKEN }} | buf registry login --username lukeshay --token-stdin
+      - run: cd proto && buf push
+      - run: buf generate
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: fly deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - if: always()
+        run: buf logout

@@ -1,0 +1,29 @@
+# fly.toml app configuration file generated for ls-snowflaker on 2024-03-26T13:51:48-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'ls-snowflaker'
+primary_region = 'dfw'
+
+[build]
+
+[[services]]
+internal_port = 8080
+protocol = "tcp"
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+[[services.http_checks]]
+interval = 10000
+grace_period = "5s"
+method = "get"
+path = "/healthz"
+protocol = "http"
+timeout = 2000
+tls_skip_verify = true
+
+[[vm]]
+memory = '512mb'
+cpu_kind = 'shared'
+cpus = 1

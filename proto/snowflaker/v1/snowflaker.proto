@@ -12,5 +12,5 @@ message GetIdRequest {}
 
 message GetIdResponse {
   int64 id = 1;
-  int64 nodeId = 2;
+  int64 node_id = 2;
 }

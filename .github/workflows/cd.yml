@@ -17,11 +17,11 @@ jobs:
         env:
           BIN: /usr/local/bin
           VERSION: 1.30.0
+      - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: echo ${{ secrets.BUF_API_TOKEN }} | buf registry login --username lukeshay --token-stdin
       - run: cd proto && buf push --tag "commit/$(git rev-parse HEAD)"
       - run: buf generate
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: fly deploy
+      - run: flyctl deploy
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - if: always()

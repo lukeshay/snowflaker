@@ -18,7 +18,7 @@ jobs:
           BIN: /usr/local/bin
           VERSION: 1.30.0
       - run: echo ${{ secrets.BUF_API_TOKEN }} | buf registry login --username lukeshay --token-stdin
-      - run: cd proto && buf push
+      - run: cd proto && buf push --tag "commit/$(git rev-parse HEAD)"
       - run: buf generate
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: fly deploy

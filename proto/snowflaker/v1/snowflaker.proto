@@ -4,12 +4,22 @@ package snowflaker.v1;
 
 option go_package = "github.com/lukeshay/snowflaker/gen/proto/snowflaker/v1;snowflakerv1";
 
+/**
+* Service for generating unique Snowflake IDs.
+*/
 service SnowflakerService {
+  // GetId returns a unique Snowflake ID.
   rpc GetId(GetIdRequest) returns (GetIdResponse) {}
 }
 
+/**
+* Request for GetId.
+*/
 message GetIdRequest {}
 
+/**
+* Response for GetId.
+*/
 message GetIdResponse {
   int64 id = 1;
   int64 node_id = 2;
